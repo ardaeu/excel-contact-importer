@@ -17,6 +17,12 @@
 
 ---
 
+## Demo
+
+![Uygulama Demosu](./frontend/public/screenshots/demo.gif)
+
+---
+
 ##  Proje Yapısı
 
 ```
