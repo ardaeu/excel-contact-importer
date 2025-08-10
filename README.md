@@ -1,29 +1,49 @@
+# Excel Contact Importer
 
-# 📇 Excel Contact Importer
+**Excel Contact Importer**, Excel dosyalarını (XLSX formatında) okuyarak verileri standart bir formata dönüştürmenizi sağlayan gelişmiş bir web uygulamasıdır.  
+Kolon eşleştirme, şablon kullanımı, JSON çıktısı alma, önizleme, **tam entegre gece/gündüz modu** ve **tema özelleştirme** gibi modern özellikler içerir.
 
-**Excel Contact Importer**, Excel dosyalarını (XLSX formatında) okuyarak kişileri standart bir formata dönüştürmenizi sağlayan bir web uygulamasıdır. Kolon eşleştirme, şablon (template) kullanımı, JSON çıktısı alma ve önizleme gibi özellikler içerir.
+---
 
+## Yeni Özellikler
+
+- **Step bazlı sihirbaz (wizard) arayüz**
+  Kullanıcılar dosya yükleme, alan eşleştirme ve sonuç görüntüleme adımlarını düzenli bir şekilde takip edebiliyor.
+- **Import Tipi Seçimi**
+  - Dosya yükleme ekranına tip seçimi eklendi
+  - Seçilen tipe göre Alan Eşleme ekranında farklı seçenekler eklendi.
+- **Tam Entegre Dark Mode (Gece Modu)**
+  - Arka plan ve yazı renkleri otomatik olarak değişir
+  - Tüm sayfalarda geçerli olacak şekilde `ConfigProvider` üzerinden uygulanır
+- **Tema Özelleştirme**
+  - `colorPrimary`, `colorSuccess`, `colorWarning` gibi renkler tek noktadan değiştirilebilir
+  - Tüm buton, ikon ve vurgular anında güncellenir
+- **Ant Design 5.x ile Tam Uyum**
+  - Yeni tema token yapısı kullanıldı
+  - `dropdownStyle` ile select menülerine dark mode uyumu
+- **Kod Düzenlemeleri & TypeScript İyileştirmeleri**
 
 ---
 
 ## Özellikler
 
--  XLSX dosyası yükleme
--  Kolon eşleştirme (manuel veya şablon kullanarak)
--  Şablon kaydetme ve tekrar kullanma
--  JSON çıktısını önizleme
--  Gece/Gündüz modu desteği
--  JSON çıktısını indirme
+- XLSX dosyası yükleme
+- Kolon eşleştirme (manuel veya şablon kullanarak)
+- Şablon kaydetme ve tekrar kullanma
+- JSON çıktısını önizleme
+- Gece/Gündüz modu desteği
+- Tema renklerini tek yerden değiştirme
+- JSON çıktısını indirme
 
 ---
 
 ## Demo
 
-![Uygulama Demosu](./frontend/public/screenshots/demo.gif)
+![Uygulama Demosu](./frontend/public/screenshots/demo2.gif)
 
 ---
 
-##  Proje Yapısı
+## Proje Yapısı
 
 ```
 excel-contact-importer/
@@ -32,7 +52,7 @@ excel-contact-importer/
 │       ├── upload.ts
 │       ├── map.ts
 │       └── template.ts
-├── frontend/             # React + TailwindCSS frontend
+├── frontend/             # React + TypeScript + Ant Design + Zustand frontend
 │   └── src/
 │       ├── components/
 │       ├── App.tsx
@@ -69,13 +89,13 @@ npm run dev
 
 ## 📦 API Uç Noktaları
 
-| Yöntem | URL                                  | Açıklama |
-|--------|--------------------------------------|----------|
-| `POST` | `/api/upload`                        | Excel dosyası yükle |
-| `POST` | `/api/map`                           | Kolon eşlemesi yap |
-| `GET`  | `/api/template/list`                 | Kayıtlı şablonları getir |
-| `GET`  | `/api/template/:name`                | Şablon detayını getir |
-| `POST` | `/api/template/save`                 | Yeni şablon kaydet |
+| Yöntem | URL                   | Açıklama                 |
+| ------ | --------------------- | ------------------------ |
+| `POST` | `/api/upload`         | Excel dosyası yükle      |
+| `POST` | `/api/map`            | Kolon eşlemesi yap       |
+| `GET`  | `/api/template/list`  | Kayıtlı şablonları getir |
+| `GET`  | `/api/template/:name` | Şablon detayını getir    |
+| `POST` | `/api/template/save`  | Yeni şablon kaydet       |
 
 ---
 
@@ -90,10 +110,11 @@ npm run dev
 
 ## Kullanılan Teknolojiler
 
-- **Frontend**: React, TypeScript, TailwindCSS, Zustand
-- **Backend**: Node.js, Express, Multer, XLSX, SQLite
+- **Frontend**: React, TypeScript, Ant Design
+- **Backend**: Node.js, Express, Multer, XLSX
 - **Diğer**: Dark/Light Mode, Vite, Toastify
 
+---
 
 ## Katkıda Bulun
 

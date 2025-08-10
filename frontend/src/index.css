@@ -11,3 +11,33 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+body {
+  background-color: #fff;
+  color: #000;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode {
+  background-color: #121212;
+  color: #eee;
+}
+
+/* Ant Design tablolar ve diğer bileşenlere de ufak dokunuş */
+body.dark-mode .ant-table {
+  background-color: #1f1f1f;
+  color: #eee;
+}
+
+body.dark-mode .ant-table-thead>tr>th {
+  background-color: #2c2c2c;
+  color: #eee;
+}
+
+body.dark-mode .ant-btn-primary {
+  background-color: #1890ff;
+  border-color: #1890ff;
+}
+
+body.dark-mode .ant-btn {
+  color: #eee;
+}
