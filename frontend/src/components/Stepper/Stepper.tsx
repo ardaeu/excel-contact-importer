@@ -4,7 +4,7 @@ import { Steps } from "antd";
 const { Step } = Steps;
 
 interface StepperProps {
-  currentStep: number; // 0 tabanlı index
+  currentStep: number;
 }
 
 const Stepper: React.FC<StepperProps> = ({ currentStep }) => {
