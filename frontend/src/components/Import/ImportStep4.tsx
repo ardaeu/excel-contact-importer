@@ -10,7 +10,7 @@ interface Props {
     outputFile: string;
   };
   onBack: () => void;
-  darkMode: boolean; // Yeni prop
+  darkMode: boolean;
 }
 
 const ImportStep4: React.FC<Props> = ({ resultData, onBack, darkMode }) => {
@@ -98,7 +98,6 @@ const ImportStep4: React.FC<Props> = ({ resultData, onBack, darkMode }) => {
         size="middle"
         scroll={{ x: 800 }}
         style={{ backgroundColor: darkMode ? "#1f1f1f" : "#fff" }}
-        // tablo satırlarına koyu mod için stil ekleyebilirsin istersen
         rowClassName={() => (darkMode ? "dark-table-row" : "")}
       />
 

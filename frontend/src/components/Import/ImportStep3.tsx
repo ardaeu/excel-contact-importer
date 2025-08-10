@@ -11,10 +11,9 @@ interface Props {
   onNext: (mapping: Record<string, string>) => void;
   fileId: string | null;
   darkMode: boolean;
-  importType: "ticket" | "contact" | "organization";  // Yeni prop
+  importType: "ticket" | "contact" | "organization";
 }
 
-// Alanlar import tipine göre:
 const fieldsMap: Record<string, string[]> = {
   contact: [
     "us.external_id",
@@ -110,7 +109,6 @@ const ImportStep3: React.FC<Props> = ({
 
   const validateMapping = () => {
     const mappedFields = Object.values(mapping);
-    // Email ve Phone alanları sadece contact tipinde kontrol edilecek
     if (importType === "contact") {
       const emailMapped = mappedFields.includes("Email") || mappedFields.includes("Emails");
       const phoneMapped = mappedFields.includes("Phone") || mappedFields.includes("Phones");
@@ -163,7 +161,6 @@ const ImportStep3: React.FC<Props> = ({
       });
   };
 
-  // Import tipine göre fieldları al
   const grispiFields = fieldsMap[importType] || [];
 
   const tableColumns = [
