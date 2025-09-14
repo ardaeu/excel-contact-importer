@@ -30,4 +30,4 @@ yarn-debug.log*
 yarn-error.log*
 
 
-credentials.json
+backend/src/token.json
