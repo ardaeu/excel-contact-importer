@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Table, Select, Button, Typography, message, Input, Modal, Steps } from "antd";
+import {
+  Table,
+  Select,
+  Button,
+  Typography,
+  message,
+  Input,
+  Modal,
+  Steps,
+  Spin,
+} from "antd";
 
 const { Option } = Select;
 const { Text } = Typography;
@@ -30,24 +40,7 @@ const fieldsMap: Record<string, string[]> = {
     "Role",
     "Enabled",
   ],
-  ticket: [
-    "ts.external_id",
-    "Subject",
-    "Description",
-    "Creator",
-    "Requester",
-    "Status",
-    "Assignee",
-    "Assignee Group",
-    "Channel",
-    "Type",
-    "Priority",
-    "Form",
-    "Created At",
-    "Updated At",
-    "Solved At",
-    "Tags",
-  ],
+  ticket: [], // Ticket alanlarını API'den dinamik olarak çekeceğiz
   organization: [
     "os.external_id",
     "Name",
@@ -58,6 +51,23 @@ const fieldsMap: Record<string, string[]> = {
     "Domains",
     "Tags",
   ],
+};
+
+// Recursive olarak nested objeyi flatten eden fonksiyon
+const flattenObject = (obj: any, parentKey = ""): string[] => {
+  let keys: string[] = [];
+
+  Object.entries(obj).forEach(([key, value]) => {
+    const newKey = parentKey ? `${parentKey}.${key}` : key;
+
+    if (value && typeof value === "object" && !Array.isArray(value)) {
+      keys = [...keys, ...flattenObject(value, newKey)];
+    } else {
+      keys.push(newKey);
+    }
+  });
+
+  return keys;
 };
 
 const ImportStep3: React.FC<Props> = ({
@@ -73,12 +83,15 @@ const ImportStep3: React.FC<Props> = ({
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
   const [saveModalVisible, setSaveModalVisible] = useState(false);
   const [newTemplateName, setNewTemplateName] = useState("");
+  const [ticketFields, setTicketFields] = useState<string[]>([]);
+  const [loadingTicketFields, setLoadingTicketFields] = useState(false);
 
   const columnsHeaders = previewData.length > 0 ? Object.keys(previewData[0]) : [];
   const samples = previewData.slice(0, 2);
 
   const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:3000/api";
 
+  // Şablonları yükle
   useEffect(() => {
     fetch(`${API_BASE}/template/list`)
       .then((res) => res.json())
@@ -88,6 +101,7 @@ const ImportStep3: React.FC<Props> = ({
       .catch(() => message.error("Şablonlar yüklenirken hata oluştu."));
   }, [API_BASE]);
 
+  // Seçilen şablonu yükle
   useEffect(() => {
     if (selectedTemplate) {
       fetch(`${API_BASE}/template/${selectedTemplate}`)
@@ -99,6 +113,29 @@ const ImportStep3: React.FC<Props> = ({
         .catch(() => message.error("Şablon yüklenirken hata oluştu."));
     }
   }, [selectedTemplate, API_BASE]);
+
+  // Eğer importType "ticket" ise API'den alanları çek
+  useEffect(() => {
+    if (importType === "ticket") {
+      setLoadingTicketFields(true);
+      fetch("https://api.grispi.com/public/v1/fields", {
+        method: "GET",
+        headers: {
+          accept: "*/*",
+          tenantId: "ardaeu", // tenantId zorunlu header
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          const flattenedKeys = flattenObject(data); // Nested tüm key'leri al
+          setTicketFields(flattenedKeys);
+        })
+        .catch(() => {
+          message.error("Ticket alanları yüklenirken hata oluştu.");
+        })
+        .finally(() => setLoadingTicketFields(false));
+    }
+  }, [importType]);
 
   const handleSelectChange = (excelCol: string, grispiField: string) => {
     setMapping((prev) => ({
@@ -161,7 +198,8 @@ const ImportStep3: React.FC<Props> = ({
       });
   };
 
-  const grispiFields = fieldsMap[importType] || [];
+  const grispiFields =
+    importType === "ticket" ? ticketFields : fieldsMap[importType] || [];
 
   const tableColumns = [
     {
@@ -197,14 +235,19 @@ const ImportStep3: React.FC<Props> = ({
       title: "Grispi Field",
       dataIndex: "grispiField",
       key: "grispiField",
-      width: 200,
+      width: 250,
       render: (_: any, record: any) => (
         <Select
           style={{ width: "100%" }}
-          placeholder="Bir alan seçin"
+          placeholder={
+            loadingTicketFields
+              ? "Yükleniyor..."
+              : "Bir alan seçin"
+          }
           value={mapping[record.excelCol]}
           onChange={(value) => handleSelectChange(record.excelCol, value)}
           allowClear
+          loading={loadingTicketFields}
           dropdownStyle={{
             backgroundColor: darkMode ? "#141414" : undefined,
             color: darkMode ? "#fff" : undefined,
@@ -221,7 +264,11 @@ const ImportStep3: React.FC<Props> = ({
           )}
         >
           {grispiFields.map((field) => (
-            <Option key={field} value={field} style={{ color: darkMode ? "#fff" : undefined }}>
+            <Option
+              key={field}
+              value={field}
+              style={{ color: darkMode ? "#fff" : undefined }}
+            >
               {field}
             </Option>
           ))}
@@ -299,16 +346,22 @@ const ImportStep3: React.FC<Props> = ({
         </Button>
       </div>
 
-      <Table
-        columns={tableColumns}
-        dataSource={tableData}
-        pagination={false}
-        scroll={{ x: 800 }}
-        bordered
-        size="middle"
-        style={{ backgroundColor: darkMode ? "#1f1f1f" : "#fff" }}
-        rowClassName={() => (darkMode ? "dark-table-row" : "")}
-      />
+      {loadingTicketFields && importType === "ticket" ? (
+        <div style={{ textAlign: "center", padding: "50px 0" }}>
+          <Spin tip="Ticket alanları yükleniyor..." />
+        </div>
+      ) : (
+        <Table
+          columns={tableColumns}
+          dataSource={tableData}
+          pagination={false}
+          scroll={{ x: 800 }}
+          bordered
+          size="middle"
+          style={{ backgroundColor: darkMode ? "#1f1f1f" : "#fff" }}
+          rowClassName={() => (darkMode ? "dark-table-row" : "")}
+        />
+      )}
 
       <div style={{ marginTop: 20, textAlign: "right" }}>
         <Button onClick={onBack} style={{ marginRight: 10 }}>
@@ -326,9 +379,19 @@ const ImportStep3: React.FC<Props> = ({
         onCancel={() => setSaveModalVisible(false)}
         okText="Kaydet"
         cancelText="İptal"
-        bodyStyle={{ backgroundColor: darkMode ? "#141414" : undefined, color: darkMode ? "#fff" : undefined }}
-        okButtonProps={{ style: { backgroundColor: darkMode ? "#722ed1" : undefined, borderColor: darkMode ? "#722ed1" : undefined } }}
-        cancelButtonProps={{ style: { color: darkMode ? "#fff" : undefined } }}
+        bodyStyle={{
+          backgroundColor: darkMode ? "#141414" : undefined,
+          color: darkMode ? "#fff" : undefined,
+        }}
+        okButtonProps={{
+          style: {
+            backgroundColor: darkMode ? "#722ed1" : undefined,
+            borderColor: darkMode ? "#722ed1" : undefined,
+          },
+        }}
+        cancelButtonProps={{
+          style: { color: darkMode ? "#fff" : undefined },
+        }}
       >
         <Input
           placeholder="Şablon Adı"
@@ -336,7 +399,10 @@ const ImportStep3: React.FC<Props> = ({
           onChange={(e) => setNewTemplateName(e.target.value)}
           onPressEnter={handleSaveTemplate}
           maxLength={50}
-          style={{ backgroundColor: darkMode ? "#1f1f1f" : undefined, color: darkMode ? "#fff" : undefined }}
+          style={{
+            backgroundColor: darkMode ? "#1f1f1f" : undefined,
+            color: darkMode ? "#fff" : undefined,
+          }}
         />
       </Modal>
     </div>

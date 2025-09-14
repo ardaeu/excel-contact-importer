@@ -1,0 +1,81 @@
+[
+  {
+    "message": "Arda",
+    "logref": "Ulus",
+    "path": "arda@example.com",
+    "_links.self.href": "+905551112234",
+    "_status": {
+      "status": "success",
+      "issues": []
+    }
+  },
+  {
+    "message": "Zeynep",
+    "logref": "Yılmaz",
+    "path": "zeynep@example.com",
+    "_links.self.href": "+905551112235",
+    "_status": {
+      "status": "success",
+      "issues": []
+    }
+  },
+  {
+    "message": "Asrın Taha",
+    "logref": "Ulus",
+    "path": "asrin@example.com",
+    "_links.self.href": "+905551112236",
+    "_status": {
+      "status": "success",
+      "issues": []
+    }
+  },
+  {
+    "message": "Enes",
+    "logref": null,
+    "path": "enes@example.com",
+    "_links.self.href": "+905551112237",
+    "_status": {
+      "status": "incomplete",
+      "issues": [
+        "logref eksik"
+      ]
+    }
+  },
+  {
+    "message": "Yakup",
+    "logref": "Sivri",
+    "path": null,
+    "_links.self.href": "+905551112238",
+    "_status": {
+      "status": "incomplete",
+      "issues": [
+        "path eksik"
+      ]
+    }
+  },
+  {
+    "message": "Mete",
+    "logref": "Terim",
+    "path": "mete@example.com",
+    "_links.self.href": null,
+    "_status": {
+      "status": "incomplete",
+      "issues": [
+        "_links.self.href eksik"
+      ]
+    }
+  },
+  {
+    "message": "Aslan",
+    "logref": "Öz",
+    "path": null,
+    "_links.self.href": null,
+    "_status": {
+      "status": "incomplete",
+      "issues": [
+        "path eksik",
+        "_links.self.href eksik"
+      ]
+    }
+  }
+]

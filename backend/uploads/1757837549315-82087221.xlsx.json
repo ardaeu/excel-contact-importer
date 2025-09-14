@@ -1,0 +1,49 @@
+{
+  "columns": [
+    "Ad",
+    "Soyad",
+    "Email",
+    "Telefon"
+  ],
+  "rows": [
+    [
+      "Arda",
+      "Ulus",
+      "arda@example.com",
+      "+905551112234"
+    ],
+    [
+      "Zeynep",
+      "Yılmaz",
+      "zeynep@example.com",
+      "+905551112235"
+    ],
+    [
+      "Asrın Taha",
+      "Ulus",
+      "asrin@example.com",
+      "+905551112236"
+    ],
+    [
+      "Enes",
+      null,
+      "enes@example.com",
+      "+905551112237"
+    ],
+    [
+      "Yakup",
+      "Sivri",
+      null,
+      "+905551112238"
+    ],
+    [
+      "Mete",
+      "Terim",
+      "mete@example.com"
+    ],
+    [
+      "Aslan",
+      "Öz"
+    ]
+  ]
+}

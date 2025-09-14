@@ -1,13 +1,14 @@
 import express from "express";
 import cors from "cors";
-import uploadRoutes from "./routes/upload";
 import fs from "fs";
+import path from "path";
+import 'dotenv/config';
+import uploadRoutes from "./routes/upload";
 import mapRouter from "./routes/map";
 import downloadRouter from "./routes/download";
 import templateRouter from "./routes/template";
+import googleDriveRoutes from "./routes/googleDrive";
 import { errorHandler } from "./middleware/errorHandler";
-import path from "path";
-
 
 ["uploads", "output", "src/templates"].forEach((dir) => {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
@@ -23,6 +24,7 @@ app.use("/api", uploadRoutes);
 app.use("/api", mapRouter);
 app.use("/api", templateRouter);
 app.use("/api", downloadRouter);
+app.use("/api/google-drive", googleDriveRoutes);
 
 app.use(errorHandler);
 

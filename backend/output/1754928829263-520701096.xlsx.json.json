@@ -1,0 +1,81 @@
+[
+  {
+    "First Name": "Arda",
+    "Last Name": "Ulus",
+    "Email": "arda@example.com",
+    "Phones": "+905551112234",
+    "_status": {
+      "status": "success",
+      "issues": []
+    }
+  },
+  {
+    "First Name": "Zeynep",
+    "Last Name": "Yılmaz",
+    "Email": "zeynep@example.com",
+    "Phones": "+905551112235",
+    "_status": {
+      "status": "success",
+      "issues": []
+    }
+  },
+  {
+    "First Name": "Asrın Taha",
+    "Last Name": "Ulus",
+    "Email": "asrin@example.com",
+    "Phones": "+905551112236",
+    "_status": {
+      "status": "success",
+      "issues": []
+    }
+  },
+  {
+    "First Name": "Enes",
+    "Last Name": null,
+    "Email": "enes@example.com",
+    "Phones": "+905551112237",
+    "_status": {
+      "status": "incomplete",
+      "issues": [
+        "Last Name eksik"
+      ]
+    }
+  },
+  {
+    "First Name": "Yakup",
+    "Last Name": "Sivri",
+    "Email": null,
+    "Phones": "+905551112238",
+    "_status": {
+      "status": "incomplete",
+      "issues": [
+        "Email eksik"
+      ]
+    }
+  },
+  {
+    "First Name": "Mete",
+    "Last Name": "Terim",
+    "Email": "mete@example.com",
+    "Phones": null,
+    "_status": {
+      "status": "incomplete",
+      "issues": [
+        "Phones eksik"
+      ]
+    }
+  },
+  {
+    "First Name": "Aslan",
+    "Last Name": "Öz",
+    "Email": null,
+    "Phones": null,
+    "_status": {
+      "status": "incomplete",
+      "issues": [
+        "Email eksik",
+        "Phones eksik"
+      ]
+    }
+  }
+]

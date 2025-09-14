@@ -11,9 +11,12 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "body-parser": "^2.2.0",
     "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
     "exceljs": "^4.4.0",
     "express": "^5.1.0",
+    "googleapis": "^159.0.0",
     "multer": "^2.0.2",
     "winston": "^3.17.0"
   },
