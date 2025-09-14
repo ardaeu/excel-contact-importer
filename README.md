@@ -7,8 +7,64 @@ Kolon eşleştirme, şablon kullanımı, JSON çıktısı alma, önizleme, **tam
 
 ## Yeni Özellikler
 
+- **Grispi Public API Entegrasyonu**
+
+  - Artık ticket import tipi seçildiğinde dropdown menüde görüntülenen eşleştirme alanları Grispi Public API' dan gelen bilgilerden oluşuyor.
+
+- **Google Drive Entegrasyonu**
+
+Projeye Google Drive’a JSON dosyası yükleme özelliği eklendi. Bu özellik sayesinde kullanıcılar, çıktı JSON dosyalarını doğrudan Google Drive hesaplarına yükleyebilir ve yükleme tamamlandıktan sonra dosyayı kolayca açabilirler.
+
+### Özellikler
+
+1. **Google OAuth 2.0 ile Yetkilendirme**
+
+   - Kullanıcı Google hesabı ile projeye bağlanır.
+   - OAuth yetkilendirme işlemi, kullanıcı daha önce yetkilendirme yapmamışsa otomatik olarak tetiklenir.
+   - Yetkilendirme tamamlandıktan sonra token sunucuda saklanır ve sonraki yüklemelerde tekrar giriş gerekmez.
+
+2. **JSON Dosyası Yükleme**
+
+   - Sonuç ekranındaki **“Google Drive’a Yükle”** butonuna basıldığında dosya Drive’a yüklenir.
+   - Yükleme sırasında buton pasif olur ve yükleme simgesi (`Spin`) gösterilir.
+   - Yükleme tamamlandığında butonun yazısı **“Google Drive'da Göster”** olarak değişir.
+
+3. **Dosyayı Google Drive’da Açma**
+
+   - Yükleme tamamlandıktan sonra butona tıklandığında dosya yeni sekmede Google Drive üzerinde açılır.
+   - Kullanıcı, dosyayı doğrudan Drive üzerinden görüntüleyebilir veya paylaşabilir.
+
+4. **Hata Yönetimi**
+
+   - OAuth token yoksa kullanıcıya yetkilendirme penceresi açılır.
+   - Yükleme sırasında oluşan hatalar kullanıcıya bildirilir (örn. “Dosya bulunamadı” veya “Google Drive yükleme hatası”).
+
+5. **UI İyileştirmeleri**
+   - Buton rengi Google Drive mavi tonu ile uyumlu olarak tasarlandı.
+   - Yükleme ve başarı durumları dinamik olarak gösterilir.
+
+### Kullanım
+
+1. Sonuç ekranında JSON dosyası yüklendiğinde:
+   - **“Google Drive’a Yükle”** butonuna basın.
+   - Eğer OAuth yetkilendirmesi yapılmamışsa, yeni bir pencere açılır ve kullanıcı giriş yapar.
+   - Yükleme tamamlandığında buton **“Google Drive'da Göster”** olur.
+2. Butona tekrar tıklayarak dosyayı Google Drive’da açabilirsiniz.
+
+---
+
+## Yeni Özellikler Demo
+
+![Uygulama Demosu](./frontend/public/screenshots/demo3.gif)
+
+---
+
+---
+
+## Özellikler
+
 - **Step bazlı sihirbaz (wizard) arayüz**
-  Kullanıcılar dosya yükleme, alan eşleştirme ve sonuç görüntüleme adımlarını düzenli bir şekilde takip edebiliyor.
+  - Kullanıcılar dosya yükleme, alan eşleştirme ve sonuç görüntüleme adımlarını düzenli bir şekilde takip edebiliyor.
 - **Import Tipi Seçimi**
   - Dosya yükleme ekranına tip seçimi eklendi
   - Seçilen tipe göre Alan Eşleme ekranında farklı seçenekler eklendi.
@@ -22,11 +78,6 @@ Kolon eşleştirme, şablon kullanımı, JSON çıktısı alma, önizleme, **tam
   - Yeni tema token yapısı kullanıldı
   - `dropdownStyle` ile select menülerine dark mode uyumu
 - **Kod Düzenlemeleri & TypeScript İyileştirmeleri**
-
----
-
-## Özellikler
-
 - XLSX dosyası yükleme
 - Kolon eşleştirme (manuel veya şablon kullanarak)
 - Şablon kaydetme ve tekrar kullanma
